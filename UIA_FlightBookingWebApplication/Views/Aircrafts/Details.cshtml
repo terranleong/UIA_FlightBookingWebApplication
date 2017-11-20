@@ -1,0 +1,42 @@
+﻿@model UIA_FlightBookingWebApplication.Models.Aircraft
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Aircraft</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.fbgID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fbgID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Airline.airlName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Airline.airlName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SeatGroup.flightSize)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SeatGroup.flightSize)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.aircID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

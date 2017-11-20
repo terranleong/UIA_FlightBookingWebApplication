@@ -1,0 +1,12 @@
+﻿
+@{
+    if (UIA_FlightBookingWebApplication.Models.Customer.loginCustomer[0] == null)
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/Login.cshtml";
+    }
+   
+}

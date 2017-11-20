@@ -1,0 +1,57 @@
+﻿@model IEnumerable<UIA_FlightBookingWebApplication.Models.SeatGroup>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.flightSize)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.totalFC)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.totalBC)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.totalPEC)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.totalEC)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.flightSize)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.totalFC)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.totalBC)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.totalPEC)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.totalEC)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.sgID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.sgID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.sgID })
+        </td>
+    </tr>
+}
+
+</table>

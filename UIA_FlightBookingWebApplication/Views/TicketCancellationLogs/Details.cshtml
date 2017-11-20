@@ -1,0 +1,82 @@
+﻿@model UIA_FlightBookingWebApplication.Models.TicketCancellationLog
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>TicketCancellationLog</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ticID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ticID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.passengerName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.passengerName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.status)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.resID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.resID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.charge)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.charge)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dateTimes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dateTimes)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.operation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.operation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Passenger.firstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Passenger.firstName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.logID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

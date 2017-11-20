@@ -1,0 +1,1392 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="FlightBookingSystemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Aircraft">
+          <Key>
+            <PropertyRef Name="aircID" />
+          </Key>
+          <Property Name="aircID" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="airlID" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="sgID" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="fbgID" Type="varchar" MaxLength="5" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Airline">
+          <Key>
+            <PropertyRef Name="airlID" />
+          </Key>
+          <Property Name="airlID" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="airlName" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Class">
+          <Key>
+            <PropertyRef Name="claID" />
+          </Key>
+          <Property Name="claID" Type="int" Nullable="false" />
+          <Property Name="claName" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="custID" />
+          </Key>
+          <Property Name="custID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="firstName" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="lastName" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="60" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Farebase">
+          <Key>
+            <PropertyRef Name="fbID" />
+          </Key>
+          <Property Name="fbID" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="airlID" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="claID" Type="int" Nullable="false" />
+          <Property Name="fbFare" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FarebaseGroup">
+          <Key>
+            <PropertyRef Name="fbgID" />
+            <PropertyRef Name="fbID" />
+          </Key>
+          <Property Name="fbgID" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="fbID" Type="varchar" MaxLength="5" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Flight">
+          <Key>
+            <PropertyRef Name="flightID" />
+          </Key>
+          <Property Name="flightID" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="aircID" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="mgID" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="source" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="destination" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="fareInfant" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+          <Property Name="fareChild" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+          <Property Name="fareYouth" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+          <Property Name="fareAdult" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+          <Property Name="fareSenior" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+          <Property Name="dates" Type="date" Nullable="false" />
+          <Property Name="times" Type="time" Precision="7" Nullable="false" />
+          <Property Name="durationHour" Type="int" Nullable="false" />
+          <Property Name="durationMin" Type="int" Nullable="false" />
+          <Property Name="timeDelayMin" Type="int" />
+          <Property Name="mealFreq" Type="varchar" MaxLength="1" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="Meal">
+          <Key>
+            <PropertyRef Name="mID" />
+          </Key>
+          <Property Name="mID" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="mName" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="mCategory" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MealGroup">
+          <Key>
+            <PropertyRef Name="mgID" />
+            <PropertyRef Name="mID" />
+          </Key>
+          <Property Name="mgID" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="mID" Type="varchar" MaxLength="5" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Passenger">
+          <Key>
+            <PropertyRef Name="passport" />
+          </Key>
+          <Property Name="passport" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="firstName" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="secondName" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="age" Type="int" Nullable="false" />
+          <Property Name="gender" Type="varchar" MaxLength="7" Nullable="false" />
+          <Property Name="ageCategory" Type="varchar" MaxLength="6" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="PassengerSeat">
+          <Key>
+            <PropertyRef Name="resID" />
+            <PropertyRef Name="seatID" />
+          </Key>
+          <Property Name="resID" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="seatID" Type="varchar" MaxLength="5" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Reservation">
+          <Key>
+            <PropertyRef Name="resID" />
+          </Key>
+          <Property Name="resID" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="type" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="customer" Type="int" />
+        </EntityType>
+        <EntityType Name="Route">
+          <Key>
+            <PropertyRef Name="resID" />
+            <PropertyRef Name="flightID" />
+          </Key>
+          <Property Name="resID" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="flightID" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Route_Reservation">
+          <Key>
+            <PropertyRef Name="recordID" />
+          </Key>
+          <Property Name="recordID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="resID" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="flightID" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="type" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="customer" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SeatGroup">
+          <Key>
+            <PropertyRef Name="sgID" />
+          </Key>
+          <Property Name="sgID" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="flightSize" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="totalFC" Type="int" Nullable="false" />
+          <Property Name="totalBC" Type="int" Nullable="false" />
+          <Property Name="totalPEC" Type="int" Nullable="false" />
+          <Property Name="totalEC" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SeatLabel">
+          <Key>
+            <PropertyRef Name="seatID" />
+          </Key>
+          <Property Name="seatID" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="sgID" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="claID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SpecialService">
+          <Key>
+            <PropertyRef Name="ssID" />
+          </Key>
+          <Property Name="ssID" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="ssName" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="ssFare" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ssReser">
+          <Key>
+            <PropertyRef Name="ssID" />
+            <PropertyRef Name="ticID" />
+          </Key>
+          <Property Name="ssID" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="ticID" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ticket">
+          <Key>
+            <PropertyRef Name="ticID" />
+          </Key>
+          <Property Name="ticID" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="passport" Type="varchar" MaxLength="25" />
+          <Property Name="status" Type="varchar" MaxLength="25" />
+          <Property Name="resID" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TicketCancellationLog">
+          <Key>
+            <PropertyRef Name="logID" />
+          </Key>
+          <Property Name="logID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ticID" Type="varchar" MaxLength="10" />
+          <Property Name="passport" Type="varchar" MaxLength="25" />
+          <Property Name="passengerName" Type="varchar" MaxLength="25" />
+          <Property Name="status" Type="varchar" MaxLength="25" />
+          <Property Name="resID" Type="varchar" MaxLength="10" />
+          <Property Name="charge" Type="decimal" Precision="5" Scale="2" />
+          <Property Name="dateTimes" Type="datetime" />
+          <Property Name="operation" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="TicketChangesLog">
+          <Key>
+            <PropertyRef Name="logID" />
+          </Key>
+          <Property Name="logID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ticID" Type="varchar" MaxLength="10" />
+          <Property Name="passport" Type="varchar" MaxLength="25" />
+          <Property Name="passengerName" Type="varchar" MaxLength="25" />
+          <Property Name="status" Type="varchar" MaxLength="25" />
+          <Property Name="resID" Type="varchar" MaxLength="10" />
+          <Property Name="charge" Type="decimal" Precision="5" Scale="2" />
+          <Property Name="dateTimes" Type="datetime" />
+          <Property Name="operation" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <Association Name="FK__Aircraft__airlID__300424B4">
+          <End Role="Airline" Type="Self.Airline" Multiplicity="1" />
+          <End Role="Aircraft" Type="Self.Aircraft" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Airline">
+              <PropertyRef Name="airlID" />
+            </Principal>
+            <Dependent Role="Aircraft">
+              <PropertyRef Name="airlID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Aircraft__sgID__2F10007B">
+          <End Role="SeatGroup" Type="Self.SeatGroup" Multiplicity="1" />
+          <End Role="Aircraft" Type="Self.Aircraft" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SeatGroup">
+              <PropertyRef Name="sgID" />
+            </Principal>
+            <Dependent Role="Aircraft">
+              <PropertyRef Name="sgID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Farebase__airlID__32E0915F">
+          <End Role="Airline" Type="Self.Airline" Multiplicity="1" />
+          <End Role="Farebase" Type="Self.Farebase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Airline">
+              <PropertyRef Name="airlID" />
+            </Principal>
+            <Dependent Role="Farebase">
+              <PropertyRef Name="airlID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Farebase__claID__33D4B598">
+          <End Role="Class" Type="Self.Class" Multiplicity="1" />
+          <End Role="Farebase" Type="Self.Farebase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Class">
+              <PropertyRef Name="claID" />
+            </Principal>
+            <Dependent Role="Farebase">
+              <PropertyRef Name="claID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FarebaseGr__fbID__35BCFE0A">
+          <End Role="Farebase" Type="Self.Farebase" Multiplicity="1" />
+          <End Role="FarebaseGroup" Type="Self.FarebaseGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Farebase">
+              <PropertyRef Name="fbID" />
+            </Principal>
+            <Dependent Role="FarebaseGroup">
+              <PropertyRef Name="fbID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Flight__aircID__412EB0B6">
+          <End Role="Aircraft" Type="Self.Aircraft" Multiplicity="1" />
+          <End Role="Flight" Type="Self.Flight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Aircraft">
+              <PropertyRef Name="aircID" />
+            </Principal>
+            <Dependent Role="Flight">
+              <PropertyRef Name="aircID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__MealGroup__mID__3A81B327">
+          <End Role="Meal" Type="Self.Meal" Multiplicity="1" />
+          <End Role="MealGroup" Type="Self.MealGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Meal">
+              <PropertyRef Name="mID" />
+            </Principal>
+            <Dependent Role="MealGroup">
+              <PropertyRef Name="mID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Passenger__resID__5165187F">
+          <End Role="Reservation" Type="Self.Reservation" Multiplicity="1" />
+          <End Role="PassengerSeat" Type="Self.PassengerSeat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reservation">
+              <PropertyRef Name="resID" />
+            </Principal>
+            <Dependent Role="PassengerSeat">
+              <PropertyRef Name="resID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Passenger__seatI__52593CB8">
+          <End Role="SeatLabel" Type="Self.SeatLabel" Multiplicity="1" />
+          <End Role="PassengerSeat" Type="Self.PassengerSeat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SeatLabel">
+              <PropertyRef Name="seatID" />
+            </Principal>
+            <Dependent Role="PassengerSeat">
+              <PropertyRef Name="seatID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Reservati__custo__17F790F9">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="Reservation" Type="Self.Reservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="custID" />
+            </Principal>
+            <Dependent Role="Reservation">
+              <PropertyRef Name="customer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Route__flightID__4F7CD00D">
+          <End Role="Flight" Type="Self.Flight" Multiplicity="1" />
+          <End Role="Route" Type="Self.Route" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Flight">
+              <PropertyRef Name="flightID" />
+            </Principal>
+            <Dependent Role="Route">
+              <PropertyRef Name="flightID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Route__resID__4E88ABD4">
+          <End Role="Reservation" Type="Self.Reservation" Multiplicity="1" />
+          <End Role="Route" Type="Self.Route" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reservation">
+              <PropertyRef Name="resID" />
+            </Principal>
+            <Dependent Role="Route">
+              <PropertyRef Name="resID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Route_Res__custo__1DB06A4F">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="Route_Reservation" Type="Self.Route_Reservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="custID" />
+            </Principal>
+            <Dependent Role="Route_Reservation">
+              <PropertyRef Name="customer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Route_Res__fligh__1CBC4616">
+          <End Role="Flight" Type="Self.Flight" Multiplicity="1" />
+          <End Role="Route_Reservation" Type="Self.Route_Reservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Flight">
+              <PropertyRef Name="flightID" />
+            </Principal>
+            <Dependent Role="Route_Reservation">
+              <PropertyRef Name="flightID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SeatLabel__claID__2C3393D0">
+          <End Role="Class" Type="Self.Class" Multiplicity="1" />
+          <End Role="SeatLabel" Type="Self.SeatLabel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Class">
+              <PropertyRef Name="claID" />
+            </Principal>
+            <Dependent Role="SeatLabel">
+              <PropertyRef Name="claID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SeatLabel__sgID__2B3F6F97">
+          <End Role="SeatGroup" Type="Self.SeatGroup" Multiplicity="1" />
+          <End Role="SeatLabel" Type="Self.SeatLabel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SeatGroup">
+              <PropertyRef Name="sgID" />
+            </Principal>
+            <Dependent Role="SeatLabel">
+              <PropertyRef Name="sgID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ssReser__ssID__5DCAEF64">
+          <End Role="SpecialService" Type="Self.SpecialService" Multiplicity="1" />
+          <End Role="ssReser" Type="Self.ssReser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SpecialService">
+              <PropertyRef Name="ssID" />
+            </Principal>
+            <Dependent Role="ssReser">
+              <PropertyRef Name="ssID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ssReser__ticID__5EBF139D">
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="1" />
+          <End Role="ssReser" Type="Self.ssReser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ticket">
+              <PropertyRef Name="ticID" />
+            </Principal>
+            <Dependent Role="ssReser">
+              <PropertyRef Name="ticID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Ticket__passport__49C3F6B7">
+          <End Role="Passenger" Type="Self.Passenger" Multiplicity="0..1" />
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Passenger">
+              <PropertyRef Name="passport" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="passport" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Ticket__resID__4BAC3F29">
+          <End Role="Reservation" Type="Self.Reservation" Multiplicity="1" />
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reservation">
+              <PropertyRef Name="resID" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="resID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TicketCan__passp__59063A47">
+          <End Role="Passenger" Type="Self.Passenger" Multiplicity="0..1" />
+          <End Role="TicketCancellationLog" Type="Self.TicketCancellationLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Passenger">
+              <PropertyRef Name="passport" />
+            </Principal>
+            <Dependent Role="TicketCancellationLog">
+              <PropertyRef Name="passport" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TicketCha__passp__5629CD9C">
+          <End Role="Passenger" Type="Self.Passenger" Multiplicity="0..1" />
+          <End Role="TicketChangesLog" Type="Self.TicketChangesLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Passenger">
+              <PropertyRef Name="passport" />
+            </Principal>
+            <Dependent Role="TicketChangesLog">
+              <PropertyRef Name="passport" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TicketCha__ticID__5535A963">
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="0..1" />
+          <End Role="TicketChangesLog" Type="Self.TicketChangesLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ticket">
+              <PropertyRef Name="ticID" />
+            </Principal>
+            <Dependent Role="TicketChangesLog">
+              <PropertyRef Name="ticID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FlightBookingSystemModelStoreContainer">
+          <EntitySet Name="Aircraft" EntityType="Self.Aircraft" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Airline" EntityType="Self.Airline" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Class" EntityType="Self.Class" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Farebase" EntityType="Self.Farebase" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FarebaseGroup" EntityType="Self.FarebaseGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Flight" EntityType="Self.Flight" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Meal" EntityType="Self.Meal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MealGroup" EntityType="Self.MealGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Passenger" EntityType="Self.Passenger" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PassengerSeat" EntityType="Self.PassengerSeat" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reservation" EntityType="Self.Reservation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Route" EntityType="Self.Route" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Route_Reservation" EntityType="Self.Route_Reservation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SeatGroup" EntityType="Self.SeatGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SeatLabel" EntityType="Self.SeatLabel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SpecialService" EntityType="Self.SpecialService" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ssReser" EntityType="Self.ssReser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ticket" EntityType="Self.Ticket" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TicketCancellationLog" EntityType="Self.TicketCancellationLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TicketChangesLog" EntityType="Self.TicketChangesLog" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Aircraft__airlID__300424B4" Association="Self.FK__Aircraft__airlID__300424B4">
+            <End Role="Airline" EntitySet="Airline" />
+            <End Role="Aircraft" EntitySet="Aircraft" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Aircraft__sgID__2F10007B" Association="Self.FK__Aircraft__sgID__2F10007B">
+            <End Role="SeatGroup" EntitySet="SeatGroup" />
+            <End Role="Aircraft" EntitySet="Aircraft" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Farebase__airlID__32E0915F" Association="Self.FK__Farebase__airlID__32E0915F">
+            <End Role="Airline" EntitySet="Airline" />
+            <End Role="Farebase" EntitySet="Farebase" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Farebase__claID__33D4B598" Association="Self.FK__Farebase__claID__33D4B598">
+            <End Role="Class" EntitySet="Class" />
+            <End Role="Farebase" EntitySet="Farebase" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FarebaseGr__fbID__35BCFE0A" Association="Self.FK__FarebaseGr__fbID__35BCFE0A">
+            <End Role="Farebase" EntitySet="Farebase" />
+            <End Role="FarebaseGroup" EntitySet="FarebaseGroup" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Flight__aircID__412EB0B6" Association="Self.FK__Flight__aircID__412EB0B6">
+            <End Role="Aircraft" EntitySet="Aircraft" />
+            <End Role="Flight" EntitySet="Flight" />
+          </AssociationSet>
+          <AssociationSet Name="FK__MealGroup__mID__3A81B327" Association="Self.FK__MealGroup__mID__3A81B327">
+            <End Role="Meal" EntitySet="Meal" />
+            <End Role="MealGroup" EntitySet="MealGroup" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Passenger__resID__5165187F" Association="Self.FK__Passenger__resID__5165187F">
+            <End Role="Reservation" EntitySet="Reservation" />
+            <End Role="PassengerSeat" EntitySet="PassengerSeat" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Passenger__seatI__52593CB8" Association="Self.FK__Passenger__seatI__52593CB8">
+            <End Role="SeatLabel" EntitySet="SeatLabel" />
+            <End Role="PassengerSeat" EntitySet="PassengerSeat" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Reservati__custo__17F790F9" Association="Self.FK__Reservati__custo__17F790F9">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Reservation" EntitySet="Reservation" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Route__flightID__4F7CD00D" Association="Self.FK__Route__flightID__4F7CD00D">
+            <End Role="Flight" EntitySet="Flight" />
+            <End Role="Route" EntitySet="Route" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Route__resID__4E88ABD4" Association="Self.FK__Route__resID__4E88ABD4">
+            <End Role="Reservation" EntitySet="Reservation" />
+            <End Role="Route" EntitySet="Route" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Route_Res__custo__1DB06A4F" Association="Self.FK__Route_Res__custo__1DB06A4F">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Route_Reservation" EntitySet="Route_Reservation" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Route_Res__fligh__1CBC4616" Association="Self.FK__Route_Res__fligh__1CBC4616">
+            <End Role="Flight" EntitySet="Flight" />
+            <End Role="Route_Reservation" EntitySet="Route_Reservation" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SeatLabel__claID__2C3393D0" Association="Self.FK__SeatLabel__claID__2C3393D0">
+            <End Role="Class" EntitySet="Class" />
+            <End Role="SeatLabel" EntitySet="SeatLabel" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SeatLabel__sgID__2B3F6F97" Association="Self.FK__SeatLabel__sgID__2B3F6F97">
+            <End Role="SeatGroup" EntitySet="SeatGroup" />
+            <End Role="SeatLabel" EntitySet="SeatLabel" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ssReser__ssID__5DCAEF64" Association="Self.FK__ssReser__ssID__5DCAEF64">
+            <End Role="SpecialService" EntitySet="SpecialService" />
+            <End Role="ssReser" EntitySet="ssReser" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ssReser__ticID__5EBF139D" Association="Self.FK__ssReser__ticID__5EBF139D">
+            <End Role="Ticket" EntitySet="Ticket" />
+            <End Role="ssReser" EntitySet="ssReser" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Ticket__passport__49C3F6B7" Association="Self.FK__Ticket__passport__49C3F6B7">
+            <End Role="Passenger" EntitySet="Passenger" />
+            <End Role="Ticket" EntitySet="Ticket" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Ticket__resID__4BAC3F29" Association="Self.FK__Ticket__resID__4BAC3F29">
+            <End Role="Reservation" EntitySet="Reservation" />
+            <End Role="Ticket" EntitySet="Ticket" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TicketCan__passp__59063A47" Association="Self.FK__TicketCan__passp__59063A47">
+            <End Role="Passenger" EntitySet="Passenger" />
+            <End Role="TicketCancellationLog" EntitySet="TicketCancellationLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TicketCha__passp__5629CD9C" Association="Self.FK__TicketCha__passp__5629CD9C">
+            <End Role="Passenger" EntitySet="Passenger" />
+            <End Role="TicketChangesLog" EntitySet="TicketChangesLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TicketCha__ticID__5535A963" Association="Self.FK__TicketCha__ticID__5535A963">
+            <End Role="Ticket" EntitySet="Ticket" />
+            <End Role="TicketChangesLog" EntitySet="TicketChangesLog" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FlightBookingSystemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Aircraft">
+          <Key>
+            <PropertyRef Name="aircID" />
+          </Key>
+          <Property Name="aircID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="airlID" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="sgID" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="fbgID" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Airline" Relationship="Self.FK__Aircraft__airlID__300424B4" FromRole="Aircraft" ToRole="Airline" />
+          <NavigationProperty Name="SeatGroup" Relationship="Self.FK__Aircraft__sgID__2F10007B" FromRole="Aircraft" ToRole="SeatGroup" />
+          <NavigationProperty Name="Flights" Relationship="Self.FK__Flight__aircID__412EB0B6" FromRole="Aircraft" ToRole="Flight" />
+        </EntityType>
+        <EntityType Name="Airline">
+          <Key>
+            <PropertyRef Name="airlID" />
+          </Key>
+          <Property Name="airlID" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="airlName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Aircraft" Relationship="Self.FK__Aircraft__airlID__300424B4" FromRole="Airline" ToRole="Aircraft" />
+          <NavigationProperty Name="Farebases" Relationship="Self.FK__Farebase__airlID__32E0915F" FromRole="Airline" ToRole="Farebase" />
+        </EntityType>
+        <EntityType Name="Class">
+          <Key>
+            <PropertyRef Name="claID" />
+          </Key>
+          <Property Name="claID" Type="Int32" Nullable="false" />
+          <Property Name="claName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Farebases" Relationship="Self.FK__Farebase__claID__33D4B598" FromRole="Class" ToRole="Farebase" />
+          <NavigationProperty Name="SeatLabels" Relationship="Self.FK__SeatLabel__claID__2C3393D0" FromRole="Class" ToRole="SeatLabel" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="custID" />
+          </Key>
+          <Property Name="custID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="firstName" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="lastName" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="username" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Reservations" Relationship="Self.FK__Reservati__custo__17F790F9" FromRole="Customer" ToRole="Reservation" />
+          <NavigationProperty Name="Route_Reservation" Relationship="FlightBookingSystemModel.FK__Route_Res__custo__1DB06A4F" FromRole="Customer" ToRole="Route_Reservation" />
+        </EntityType>
+        <EntityType Name="Farebase">
+          <Key>
+            <PropertyRef Name="fbID" />
+          </Key>
+          <Property Name="fbID" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="airlID" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="claID" Type="Int32" Nullable="false" />
+          <Property Name="fbFare" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+          <NavigationProperty Name="Airline" Relationship="Self.FK__Farebase__airlID__32E0915F" FromRole="Farebase" ToRole="Airline" />
+          <NavigationProperty Name="Class" Relationship="Self.FK__Farebase__claID__33D4B598" FromRole="Farebase" ToRole="Class" />
+          <NavigationProperty Name="FarebaseGroups" Relationship="Self.FK__FarebaseGr__fbID__35BCFE0A" FromRole="Farebase" ToRole="FarebaseGroup" />
+        </EntityType>
+        <EntityType Name="FarebaseGroup">
+          <Key>
+            <PropertyRef Name="fbgID" />
+            <PropertyRef Name="fbID" />
+          </Key>
+          <Property Name="fbgID" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="fbID" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Farebase" Relationship="Self.FK__FarebaseGr__fbID__35BCFE0A" FromRole="FarebaseGroup" ToRole="Farebase" />
+        </EntityType>
+        <EntityType Name="Flight">
+          <Key>
+            <PropertyRef Name="flightID" />
+          </Key>
+          <Property Name="flightID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="aircID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="mgID" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="source" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="destination" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="fareInfant" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+          <Property Name="fareChild" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+          <Property Name="fareYouth" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+          <Property Name="fareAdult" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+          <Property Name="fareSenior" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+          <Property Name="dates" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="times" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="durationHour" Type="Int32" Nullable="false" />
+          <Property Name="durationMin" Type="Int32" Nullable="false" />
+          <Property Name="timeDelayMin" Type="Int32" />
+          <Property Name="mealFreq" Type="String" MaxLength="1" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="Aircraft" Relationship="Self.FK__Flight__aircID__412EB0B6" FromRole="Flight" ToRole="Aircraft" />
+          <NavigationProperty Name="Reservations" Relationship="Self.Route" FromRole="Flight" ToRole="Reservation" />
+          <NavigationProperty Name="Route_Reservation" Relationship="FlightBookingSystemModel.FK__Route_Res__fligh__1CBC4616" FromRole="Flight" ToRole="Route_Reservation" />
+        </EntityType>
+        <EntityType Name="Meal">
+          <Key>
+            <PropertyRef Name="mID" />
+          </Key>
+          <Property Name="mID" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="mName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="mCategory" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="MealGroups" Relationship="Self.FK__MealGroup__mID__3A81B327" FromRole="Meal" ToRole="MealGroup" />
+        </EntityType>
+        <EntityType Name="MealGroup">
+          <Key>
+            <PropertyRef Name="mgID" />
+            <PropertyRef Name="mID" />
+          </Key>
+          <Property Name="mgID" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="mID" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Meal" Relationship="Self.FK__MealGroup__mID__3A81B327" FromRole="MealGroup" ToRole="Meal" />
+        </EntityType>
+        <EntityType Name="Passenger">
+          <Key>
+            <PropertyRef Name="passport" />
+          </Key>
+          <Property Name="passport" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="firstName" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="secondName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="age" Type="Int32" Nullable="false" />
+          <Property Name="gender" Type="String" MaxLength="7" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ageCategory" Type="String" MaxLength="6" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="Tickets" Relationship="Self.FK__Ticket__passport__49C3F6B7" FromRole="Passenger" ToRole="Ticket" />
+          <NavigationProperty Name="TicketCancellationLogs" Relationship="Self.FK__TicketCan__passp__59063A47" FromRole="Passenger" ToRole="TicketCancellationLog" />
+          <NavigationProperty Name="TicketChangesLogs" Relationship="Self.FK__TicketCha__passp__5629CD9C" FromRole="Passenger" ToRole="TicketChangesLog" />
+        </EntityType>
+        <EntityType Name="Reservation">
+          <Key>
+            <PropertyRef Name="resID" />
+          </Key>
+          <Property Name="resID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="type" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="customer" Type="Int32" />
+          <NavigationProperty Name="Customer1" Relationship="Self.FK__Reservati__custo__17F790F9" FromRole="Reservation" ToRole="Customer" />
+          <NavigationProperty Name="Tickets" Relationship="Self.FK__Ticket__resID__4BAC3F29" FromRole="Reservation" ToRole="Ticket" />
+          <NavigationProperty Name="SeatLabels" Relationship="Self.PassengerSeat" FromRole="Reservation" ToRole="SeatLabel" />
+          <NavigationProperty Name="Flights" Relationship="Self.Route" FromRole="Reservation" ToRole="Flight" />
+        </EntityType>
+        <EntityType Name="SeatGroup">
+          <Key>
+            <PropertyRef Name="sgID" />
+          </Key>
+          <Property Name="sgID" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="flightSize" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="totalFC" Type="Int32" Nullable="false" />
+          <Property Name="totalBC" Type="Int32" Nullable="false" />
+          <Property Name="totalPEC" Type="Int32" Nullable="false" />
+          <Property Name="totalEC" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Aircraft" Relationship="Self.FK__Aircraft__sgID__2F10007B" FromRole="SeatGroup" ToRole="Aircraft" />
+          <NavigationProperty Name="SeatLabels" Relationship="Self.FK__SeatLabel__sgID__2B3F6F97" FromRole="SeatGroup" ToRole="SeatLabel" />
+        </EntityType>
+        <EntityType Name="SeatLabel">
+          <Key>
+            <PropertyRef Name="seatID" />
+          </Key>
+          <Property Name="seatID" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="sgID" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="claID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Class" Relationship="Self.FK__SeatLabel__claID__2C3393D0" FromRole="SeatLabel" ToRole="Class" />
+          <NavigationProperty Name="SeatGroup" Relationship="Self.FK__SeatLabel__sgID__2B3F6F97" FromRole="SeatLabel" ToRole="SeatGroup" />
+          <NavigationProperty Name="Reservations" Relationship="Self.PassengerSeat" FromRole="SeatLabel" ToRole="Reservation" />
+        </EntityType>
+        <EntityType Name="SpecialService">
+          <Key>
+            <PropertyRef Name="ssID" />
+          </Key>
+          <Property Name="ssID" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ssName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ssFare" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+          <NavigationProperty Name="Tickets" Relationship="Self.ssReser" FromRole="SpecialService" ToRole="Ticket" />
+        </EntityType>
+        <EntityType Name="Ticket">
+          <Key>
+            <PropertyRef Name="ticID" />
+          </Key>
+          <Property Name="ticID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="passport" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="status" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="resID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Passenger" Relationship="Self.FK__Ticket__passport__49C3F6B7" FromRole="Ticket" ToRole="Passenger" />
+          <NavigationProperty Name="Reservation" Relationship="Self.FK__Ticket__resID__4BAC3F29" FromRole="Ticket" ToRole="Reservation" />
+          <NavigationProperty Name="TicketChangesLogs" Relationship="Self.FK__TicketCha__ticID__5535A963" FromRole="Ticket" ToRole="TicketChangesLog" />
+          <NavigationProperty Name="SpecialServices" Relationship="Self.ssReser" FromRole="Ticket" ToRole="SpecialService" />
+        </EntityType>
+        <EntityType Name="TicketCancellationLog">
+          <Key>
+            <PropertyRef Name="logID" />
+          </Key>
+          <Property Name="logID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ticID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="passport" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="passengerName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="status" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="resID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="charge" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="dateTimes" Type="DateTime" Precision="3" />
+          <Property Name="operation" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Passenger" Relationship="Self.FK__TicketCan__passp__59063A47" FromRole="TicketCancellationLog" ToRole="Passenger" />
+        </EntityType>
+        <EntityType Name="TicketChangesLog">
+          <Key>
+            <PropertyRef Name="logID" />
+          </Key>
+          <Property Name="logID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ticID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="passport" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="passengerName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="status" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="resID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="charge" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="dateTimes" Type="DateTime" Precision="3" />
+          <Property Name="operation" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Passenger" Relationship="Self.FK__TicketCha__passp__5629CD9C" FromRole="TicketChangesLog" ToRole="Passenger" />
+          <NavigationProperty Name="Ticket" Relationship="Self.FK__TicketCha__ticID__5535A963" FromRole="TicketChangesLog" ToRole="Ticket" />
+        </EntityType>
+        <Association Name="FK__Aircraft__airlID__300424B4">
+          <End Role="Airline" Type="Self.Airline" Multiplicity="1" />
+          <End Role="Aircraft" Type="Self.Aircraft" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Airline">
+              <PropertyRef Name="airlID" />
+            </Principal>
+            <Dependent Role="Aircraft">
+              <PropertyRef Name="airlID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Aircraft__sgID__2F10007B">
+          <End Role="SeatGroup" Type="Self.SeatGroup" Multiplicity="1" />
+          <End Role="Aircraft" Type="Self.Aircraft" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SeatGroup">
+              <PropertyRef Name="sgID" />
+            </Principal>
+            <Dependent Role="Aircraft">
+              <PropertyRef Name="sgID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Flight__aircID__412EB0B6">
+          <End Role="Aircraft" Type="Self.Aircraft" Multiplicity="1" />
+          <End Role="Flight" Type="Self.Flight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Aircraft">
+              <PropertyRef Name="aircID" />
+            </Principal>
+            <Dependent Role="Flight">
+              <PropertyRef Name="aircID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Farebase__airlID__32E0915F">
+          <End Role="Airline" Type="Self.Airline" Multiplicity="1" />
+          <End Role="Farebase" Type="Self.Farebase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Airline">
+              <PropertyRef Name="airlID" />
+            </Principal>
+            <Dependent Role="Farebase">
+              <PropertyRef Name="airlID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Farebase__claID__33D4B598">
+          <End Role="Class" Type="Self.Class" Multiplicity="1" />
+          <End Role="Farebase" Type="Self.Farebase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Class">
+              <PropertyRef Name="claID" />
+            </Principal>
+            <Dependent Role="Farebase">
+              <PropertyRef Name="claID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SeatLabel__claID__2C3393D0">
+          <End Role="Class" Type="Self.Class" Multiplicity="1" />
+          <End Role="SeatLabel" Type="Self.SeatLabel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Class">
+              <PropertyRef Name="claID" />
+            </Principal>
+            <Dependent Role="SeatLabel">
+              <PropertyRef Name="claID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Reservati__custo__17F790F9">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="Reservation" Type="Self.Reservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="custID" />
+            </Principal>
+            <Dependent Role="Reservation">
+              <PropertyRef Name="customer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FarebaseGr__fbID__35BCFE0A">
+          <End Role="Farebase" Type="Self.Farebase" Multiplicity="1" />
+          <End Role="FarebaseGroup" Type="Self.FarebaseGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Farebase">
+              <PropertyRef Name="fbID" />
+            </Principal>
+            <Dependent Role="FarebaseGroup">
+              <PropertyRef Name="fbID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__MealGroup__mID__3A81B327">
+          <End Role="Meal" Type="Self.Meal" Multiplicity="1" />
+          <End Role="MealGroup" Type="Self.MealGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Meal">
+              <PropertyRef Name="mID" />
+            </Principal>
+            <Dependent Role="MealGroup">
+              <PropertyRef Name="mID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Ticket__passport__49C3F6B7">
+          <End Role="Passenger" Type="Self.Passenger" Multiplicity="0..1" />
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Passenger">
+              <PropertyRef Name="passport" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="passport" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TicketCan__passp__59063A47">
+          <End Role="Passenger" Type="Self.Passenger" Multiplicity="0..1" />
+          <End Role="TicketCancellationLog" Type="Self.TicketCancellationLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Passenger">
+              <PropertyRef Name="passport" />
+            </Principal>
+            <Dependent Role="TicketCancellationLog">
+              <PropertyRef Name="passport" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TicketCha__passp__5629CD9C">
+          <End Role="Passenger" Type="Self.Passenger" Multiplicity="0..1" />
+          <End Role="TicketChangesLog" Type="Self.TicketChangesLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Passenger">
+              <PropertyRef Name="passport" />
+            </Principal>
+            <Dependent Role="TicketChangesLog">
+              <PropertyRef Name="passport" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Ticket__resID__4BAC3F29">
+          <End Role="Reservation" Type="Self.Reservation" Multiplicity="1" />
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reservation">
+              <PropertyRef Name="resID" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="resID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SeatLabel__sgID__2B3F6F97">
+          <End Role="SeatGroup" Type="Self.SeatGroup" Multiplicity="1" />
+          <End Role="SeatLabel" Type="Self.SeatLabel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SeatGroup">
+              <PropertyRef Name="sgID" />
+            </Principal>
+            <Dependent Role="SeatLabel">
+              <PropertyRef Name="sgID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TicketCha__ticID__5535A963">
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="0..1" />
+          <End Role="TicketChangesLog" Type="Self.TicketChangesLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ticket">
+              <PropertyRef Name="ticID" />
+            </Principal>
+            <Dependent Role="TicketChangesLog">
+              <PropertyRef Name="ticID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PassengerSeat">
+          <End Role="Reservation" Type="Self.Reservation" Multiplicity="*" />
+          <End Role="SeatLabel" Type="Self.SeatLabel" Multiplicity="*" />
+        </Association>
+        <Association Name="Route">
+          <End Role="Flight" Type="Self.Flight" Multiplicity="*" />
+          <End Role="Reservation" Type="Self.Reservation" Multiplicity="*" />
+        </Association>
+        <Association Name="ssReser">
+          <End Role="SpecialService" Type="Self.SpecialService" Multiplicity="*" />
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="FlightBookingSystemEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Aircraft" EntityType="Self.Aircraft" />
+          <EntitySet Name="Airlines" EntityType="Self.Airline" />
+          <EntitySet Name="Classes" EntityType="Self.Class" />
+          <EntitySet Name="Customers" EntityType="Self.Customer" />
+          <EntitySet Name="Farebases" EntityType="Self.Farebase" />
+          <EntitySet Name="FarebaseGroups" EntityType="Self.FarebaseGroup" />
+          <EntitySet Name="Flights" EntityType="Self.Flight" />
+          <EntitySet Name="Meals" EntityType="Self.Meal" />
+          <EntitySet Name="MealGroups" EntityType="Self.MealGroup" />
+          <EntitySet Name="Passengers" EntityType="Self.Passenger" />
+          <EntitySet Name="Reservations" EntityType="Self.Reservation" />
+          <EntitySet Name="SeatGroups" EntityType="Self.SeatGroup" />
+          <EntitySet Name="SeatLabels" EntityType="Self.SeatLabel" />
+          <EntitySet Name="SpecialServices" EntityType="Self.SpecialService" />
+          <EntitySet Name="Tickets" EntityType="Self.Ticket" />
+          <EntitySet Name="TicketCancellationLogs" EntityType="Self.TicketCancellationLog" />
+          <EntitySet Name="TicketChangesLogs" EntityType="Self.TicketChangesLog" />
+          <AssociationSet Name="FK__Aircraft__airlID__300424B4" Association="Self.FK__Aircraft__airlID__300424B4">
+            <End Role="Airline" EntitySet="Airlines" />
+            <End Role="Aircraft" EntitySet="Aircraft" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Aircraft__sgID__2F10007B" Association="Self.FK__Aircraft__sgID__2F10007B">
+            <End Role="SeatGroup" EntitySet="SeatGroups" />
+            <End Role="Aircraft" EntitySet="Aircraft" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Flight__aircID__412EB0B6" Association="Self.FK__Flight__aircID__412EB0B6">
+            <End Role="Aircraft" EntitySet="Aircraft" />
+            <End Role="Flight" EntitySet="Flights" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Farebase__airlID__32E0915F" Association="Self.FK__Farebase__airlID__32E0915F">
+            <End Role="Airline" EntitySet="Airlines" />
+            <End Role="Farebase" EntitySet="Farebases" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Farebase__claID__33D4B598" Association="Self.FK__Farebase__claID__33D4B598">
+            <End Role="Class" EntitySet="Classes" />
+            <End Role="Farebase" EntitySet="Farebases" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SeatLabel__claID__2C3393D0" Association="Self.FK__SeatLabel__claID__2C3393D0">
+            <End Role="Class" EntitySet="Classes" />
+            <End Role="SeatLabel" EntitySet="SeatLabels" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Reservati__custo__17F790F9" Association="Self.FK__Reservati__custo__17F790F9">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Reservation" EntitySet="Reservations" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FarebaseGr__fbID__35BCFE0A" Association="Self.FK__FarebaseGr__fbID__35BCFE0A">
+            <End Role="Farebase" EntitySet="Farebases" />
+            <End Role="FarebaseGroup" EntitySet="FarebaseGroups" />
+          </AssociationSet>
+          <AssociationSet Name="FK__MealGroup__mID__3A81B327" Association="Self.FK__MealGroup__mID__3A81B327">
+            <End Role="Meal" EntitySet="Meals" />
+            <End Role="MealGroup" EntitySet="MealGroups" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Ticket__passport__49C3F6B7" Association="Self.FK__Ticket__passport__49C3F6B7">
+            <End Role="Passenger" EntitySet="Passengers" />
+            <End Role="Ticket" EntitySet="Tickets" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TicketCan__passp__59063A47" Association="Self.FK__TicketCan__passp__59063A47">
+            <End Role="Passenger" EntitySet="Passengers" />
+            <End Role="TicketCancellationLog" EntitySet="TicketCancellationLogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TicketCha__passp__5629CD9C" Association="Self.FK__TicketCha__passp__5629CD9C">
+            <End Role="Passenger" EntitySet="Passengers" />
+            <End Role="TicketChangesLog" EntitySet="TicketChangesLogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Ticket__resID__4BAC3F29" Association="Self.FK__Ticket__resID__4BAC3F29">
+            <End Role="Reservation" EntitySet="Reservations" />
+            <End Role="Ticket" EntitySet="Tickets" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SeatLabel__sgID__2B3F6F97" Association="Self.FK__SeatLabel__sgID__2B3F6F97">
+            <End Role="SeatGroup" EntitySet="SeatGroups" />
+            <End Role="SeatLabel" EntitySet="SeatLabels" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TicketCha__ticID__5535A963" Association="Self.FK__TicketCha__ticID__5535A963">
+            <End Role="Ticket" EntitySet="Tickets" />
+            <End Role="TicketChangesLog" EntitySet="TicketChangesLogs" />
+          </AssociationSet>
+          <AssociationSet Name="PassengerSeat" Association="Self.PassengerSeat">
+            <End Role="Reservation" EntitySet="Reservations" />
+            <End Role="SeatLabel" EntitySet="SeatLabels" />
+          </AssociationSet>
+          <AssociationSet Name="Route" Association="Self.Route">
+            <End Role="Flight" EntitySet="Flights" />
+            <End Role="Reservation" EntitySet="Reservations" />
+          </AssociationSet>
+          <AssociationSet Name="ssReser" Association="Self.ssReser">
+            <End Role="SpecialService" EntitySet="SpecialServices" />
+            <End Role="Ticket" EntitySet="Tickets" />
+          </AssociationSet>
+          <EntitySet Name="Route_Reservation" EntityType="FlightBookingSystemModel.Route_Reservation" />
+          <AssociationSet Name="FK__Route_Res__custo__1DB06A4F" Association="FlightBookingSystemModel.FK__Route_Res__custo__1DB06A4F">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Route_Reservation" EntitySet="Route_Reservation" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Route_Res__fligh__1CBC4616" Association="FlightBookingSystemModel.FK__Route_Res__fligh__1CBC4616">
+            <End Role="Flight" EntitySet="Flights" />
+            <End Role="Route_Reservation" EntitySet="Route_Reservation" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Route_Reservation">
+          <Key>
+            <PropertyRef Name="recordID" />
+          </Key>
+          <Property Name="recordID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="resID" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="flightID" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="type" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="customer" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Customer1" Relationship="FlightBookingSystemModel.FK__Route_Res__custo__1DB06A4F" FromRole="Route_Reservation" ToRole="Customer" />
+          <NavigationProperty Name="Flight" Relationship="FlightBookingSystemModel.FK__Route_Res__fligh__1CBC4616" FromRole="Route_Reservation" ToRole="Flight" />
+        </EntityType>
+        <Association Name="FK__Route_Res__custo__1DB06A4F">
+          <End Type="FlightBookingSystemModel.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="FlightBookingSystemModel.Route_Reservation" Role="Route_Reservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="custID" />
+            </Principal>
+            <Dependent Role="Route_Reservation">
+              <PropertyRef Name="customer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Route_Res__fligh__1CBC4616">
+          <End Type="FlightBookingSystemModel.Flight" Role="Flight" Multiplicity="1" />
+          <End Type="FlightBookingSystemModel.Route_Reservation" Role="Route_Reservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Flight">
+              <PropertyRef Name="flightID" />
+            </Principal>
+            <Dependent Role="Route_Reservation">
+              <PropertyRef Name="flightID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FlightBookingSystemModelStoreContainer" CdmEntityContainer="FlightBookingSystemEntities">
+          <EntitySetMapping Name="Aircraft">
+            <EntityTypeMapping TypeName="FlightBookingSystemModel.Aircraft">
+              <MappingFragment StoreEntitySet="Aircraft">
+                <ScalarProperty Name="aircID" ColumnName="aircID" />
+                <ScalarProperty Name="airlID" ColumnName="airlID" />
+                <ScalarProperty Name="sgID" ColumnName="sgID" />
+                <ScalarProperty Name="fbgID" ColumnName="fbgID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Airlines">
+            <EntityTypeMapping TypeName="FlightBookingSystemModel.Airline">
+              <MappingFragment StoreEntitySet="Airline">
+                <ScalarProperty Name="airlID" ColumnName="airlID" />
+                <ScalarProperty Name="airlName" ColumnName="airlName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Classes">
+            <EntityTypeMapping TypeName="FlightBookingSystemModel.Class">
+              <MappingFragment StoreEntitySet="Class">
+                <ScalarProperty Name="claID" ColumnName="claID" />
+                <ScalarProperty Name="claName" ColumnName="claName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="FlightBookingSystemModel.Customer">
+              <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="custID" ColumnName="custID" />
+                <ScalarProperty Name="firstName" ColumnName="firstName" />
+                <ScalarProperty Name="lastName" ColumnName="lastName" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Farebases">
+            <EntityTypeMapping TypeName="FlightBookingSystemModel.Farebase">
+              <MappingFragment StoreEntitySet="Farebase">
+                <ScalarProperty Name="fbID" ColumnName="fbID" />
+                <ScalarProperty Name="airlID" ColumnName="airlID" />
+                <ScalarProperty Name="claID" ColumnName="claID" />
+                <ScalarProperty Name="fbFare" ColumnName="fbFare" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FarebaseGroups">
+            <EntityTypeMapping TypeName="FlightBookingSystemModel.FarebaseGroup">
+              <MappingFragment StoreEntitySet="FarebaseGroup">
+                <ScalarProperty Name="fbgID" ColumnName="fbgID" />
+                <ScalarProperty Name="fbID" ColumnName="fbID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Flights">
+            <EntityTypeMapping TypeName="FlightBookingSystemModel.Flight">
+              <MappingFragment StoreEntitySet="Flight">
+                <ScalarProperty Name="flightID" ColumnName="flightID" />
+                <ScalarProperty Name="aircID" ColumnName="aircID" />
+                <ScalarProperty Name="mgID" ColumnName="mgID" />
+                <ScalarProperty Name="source" ColumnName="source" />
+                <ScalarProperty Name="destination" ColumnName="destination" />
+                <ScalarProperty Name="fareInfant" ColumnName="fareInfant" />
+                <ScalarProperty Name="fareChild" ColumnName="fareChild" />
+                <ScalarProperty Name="fareYouth" ColumnName="fareYouth" />
+                <ScalarProperty Name="fareAdult" ColumnName="fareAdult" />
+                <ScalarProperty Name="fareSenior" ColumnName="fareSenior" />
+                <ScalarProperty Name="dates" ColumnName="dates" />
+                <ScalarProperty Name="times" ColumnName="times" />
+                <ScalarProperty Name="durationHour" ColumnName="durationHour" />
+                <ScalarProperty Name="durationMin" ColumnName="durationMin" />
+                <ScalarProperty Name="timeDelayMin" ColumnName="timeDelayMin" />
+                <ScalarProperty Name="mealFreq" ColumnName="mealFreq" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Meals">
+            <EntityTypeMapping TypeName="FlightBookingSystemModel.Meal">
+              <MappingFragment StoreEntitySet="Meal">
+                <ScalarProperty Name="mID" ColumnName="mID" />
+                <ScalarProperty Name="mName" ColumnName="mName" />
+                <ScalarProperty Name="mCategory" ColumnName="mCategory" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MealGroups">
+            <EntityTypeMapping TypeName="FlightBookingSystemModel.MealGroup">
+              <MappingFragment StoreEntitySet="MealGroup">
+                <ScalarProperty Name="mgID" ColumnName="mgID" />
+                <ScalarProperty Name="mID" ColumnName="mID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Passengers">
+            <EntityTypeMapping TypeName="FlightBookingSystemModel.Passenger">
+              <MappingFragment StoreEntitySet="Passenger">
+                <ScalarProperty Name="passport" ColumnName="passport" />
+                <ScalarProperty Name="firstName" ColumnName="firstName" />
+                <ScalarProperty Name="secondName" ColumnName="secondName" />
+                <ScalarProperty Name="age" ColumnName="age" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="ageCategory" ColumnName="ageCategory" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reservations">
+            <EntityTypeMapping TypeName="FlightBookingSystemModel.Reservation">
+              <MappingFragment StoreEntitySet="Reservation">
+                <ScalarProperty Name="resID" ColumnName="resID" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="customer" ColumnName="customer" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SeatGroups">
+            <EntityTypeMapping TypeName="FlightBookingSystemModel.SeatGroup">
+              <MappingFragment StoreEntitySet="SeatGroup">
+                <ScalarProperty Name="sgID" ColumnName="sgID" />
+                <ScalarProperty Name="flightSize" ColumnName="flightSize" />
+                <ScalarProperty Name="totalFC" ColumnName="totalFC" />
+                <ScalarProperty Name="totalBC" ColumnName="totalBC" />
+                <ScalarProperty Name="totalPEC" ColumnName="totalPEC" />
+                <ScalarProperty Name="totalEC" ColumnName="totalEC" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SeatLabels">
+            <EntityTypeMapping TypeName="FlightBookingSystemModel.SeatLabel">
+              <MappingFragment StoreEntitySet="SeatLabel">
+                <ScalarProperty Name="seatID" ColumnName="seatID" />
+                <ScalarProperty Name="sgID" ColumnName="sgID" />
+                <ScalarProperty Name="claID" ColumnName="claID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SpecialServices">
+            <EntityTypeMapping TypeName="FlightBookingSystemModel.SpecialService">
+              <MappingFragment StoreEntitySet="SpecialService">
+                <ScalarProperty Name="ssID" ColumnName="ssID" />
+                <ScalarProperty Name="ssName" ColumnName="ssName" />
+                <ScalarProperty Name="ssFare" ColumnName="ssFare" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tickets">
+            <EntityTypeMapping TypeName="FlightBookingSystemModel.Ticket">
+              <MappingFragment StoreEntitySet="Ticket">
+                <ScalarProperty Name="ticID" ColumnName="ticID" />
+                <ScalarProperty Name="passport" ColumnName="passport" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="resID" ColumnName="resID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TicketCancellationLogs">
+            <EntityTypeMapping TypeName="FlightBookingSystemModel.TicketCancellationLog">
+              <MappingFragment StoreEntitySet="TicketCancellationLog">
+                <ScalarProperty Name="logID" ColumnName="logID" />
+                <ScalarProperty Name="ticID" ColumnName="ticID" />
+                <ScalarProperty Name="passport" ColumnName="passport" />
+                <ScalarProperty Name="passengerName" ColumnName="passengerName" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="resID" ColumnName="resID" />
+                <ScalarProperty Name="charge" ColumnName="charge" />
+                <ScalarProperty Name="dateTimes" ColumnName="dateTimes" />
+                <ScalarProperty Name="operation" ColumnName="operation" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TicketChangesLogs">
+            <EntityTypeMapping TypeName="FlightBookingSystemModel.TicketChangesLog">
+              <MappingFragment StoreEntitySet="TicketChangesLog">
+                <ScalarProperty Name="logID" ColumnName="logID" />
+                <ScalarProperty Name="ticID" ColumnName="ticID" />
+                <ScalarProperty Name="passport" ColumnName="passport" />
+                <ScalarProperty Name="passengerName" ColumnName="passengerName" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="resID" ColumnName="resID" />
+                <ScalarProperty Name="charge" ColumnName="charge" />
+                <ScalarProperty Name="dateTimes" ColumnName="dateTimes" />
+                <ScalarProperty Name="operation" ColumnName="operation" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="PassengerSeat" TypeName="FlightBookingSystemModel.PassengerSeat" StoreEntitySet="PassengerSeat">
+            <EndProperty Name="Reservation">
+              <ScalarProperty Name="resID" ColumnName="resID" />
+            </EndProperty>
+            <EndProperty Name="SeatLabel">
+              <ScalarProperty Name="seatID" ColumnName="seatID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Route" TypeName="FlightBookingSystemModel.Route" StoreEntitySet="Route">
+            <EndProperty Name="Flight">
+              <ScalarProperty Name="flightID" ColumnName="flightID" />
+            </EndProperty>
+            <EndProperty Name="Reservation">
+              <ScalarProperty Name="resID" ColumnName="resID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="ssReser" TypeName="FlightBookingSystemModel.ssReser" StoreEntitySet="ssReser">
+            <EndProperty Name="SpecialService">
+              <ScalarProperty Name="ssID" ColumnName="ssID" />
+            </EndProperty>
+            <EndProperty Name="Ticket">
+              <ScalarProperty Name="ticID" ColumnName="ticID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="Route_Reservation">
+            <EntityTypeMapping TypeName="FlightBookingSystemModel.Route_Reservation">
+              <MappingFragment StoreEntitySet="Route_Reservation">
+                <ScalarProperty Name="customer" ColumnName="customer" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="flightID" ColumnName="flightID" />
+                <ScalarProperty Name="resID" ColumnName="resID" />
+                <ScalarProperty Name="recordID" ColumnName="recordID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

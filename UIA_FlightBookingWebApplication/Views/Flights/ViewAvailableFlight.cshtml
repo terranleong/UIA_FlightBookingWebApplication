@@ -1,0 +1,129 @@
+﻿@model IEnumerable<UIA_FlightBookingWebApplication.Models.Flight>
+    
+@{
+    ViewBag.Title = "Available Flight";
+}
+
+<h2>Available Flight</h2>
+
+<p>  
+    @using (Html.BeginForm("ViewAvailableFlight","Flights",FormMethod.Get)){    
+        <p>
+            Departure Location: @Html.DropDownList("flightDepart", "All")
+            Destination: @Html.DropDownList("flightDest", "All")
+            <br />
+            <br/>
+            Departure Date: <input type="text" id="DepartureDate" name="selectedDepartureDate"/>
+            <br/>
+            <br/>
+            <input type="submit" value="Filter"/>
+        </p> 
+    } 
+</p>
+    
+<p>
+    Result with:
+
+    @if (ViewBag.depart == null && ViewBag.dest == null && ViewBag.departd == null)
+    {
+    <br/>
+        <p>-</p>
+    }
+   
+    @if (ViewBag.depart != null){
+        <h5>Flight Departure Location:    <b>@ViewBag.depart</b></h5> 
+    }
+
+    @if (ViewBag.dest != null){
+        <h5>Flight Destination:    <b>@ViewBag.dest</b></h5>
+    }
+    
+    @if (ViewBag.departd != null){
+        <h5>Flight Date:    <b>@ViewBag.departd</b></h5>
+    }
+    
+<!--    @if (ViewBag.ResID != null){
+        <p>ResID:    @ViewBag.ResID</p>
+    }
+    
+    @if (ViewBag.FlightID != null){
+        <p>FlightID:    @ViewBag.FlightID</p>
+    }
+    
+    @if (ViewBag.Type != null){
+        <p>Flight Type:    @ViewBag.Type</p>
+    }
+    
+    @if (ViewBag.CustID != null){
+        <p>Cust ID:    @ViewBag.CustID</p>
+    }-->
+</p>
+
+    
+@if (ViewBag.HasAvailableFlight == false)
+    {
+        <h4>Sorry, there is no available flight.</h4>
+    }
+    
+@if (ViewBag.HasLoginUser == false){
+    <h4>Dear user, please login to book the flight.</h4>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.source)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.destination)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.dates)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.times)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.durationHour)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.durationMin)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Aircraft.airlID)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.source)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.destination)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.dates)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.times)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.durationHour)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.durationMin)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Aircraft.airlID)
+        </td>
+        <td>
+            @Html.ActionLink("Details", "Details", new { id=item.flightID })
+            @Html.ActionLink("Book", "Book", "Route_Reservation", new { id=item.flightID }, null)
+        </td>
+    </tr>
+}
+
+</table>
+

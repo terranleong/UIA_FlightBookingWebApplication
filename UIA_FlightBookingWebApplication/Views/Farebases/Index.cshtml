@@ -1,0 +1,45 @@
+﻿@model IEnumerable<UIA_FlightBookingWebApplication.Models.Farebase>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.fbFare)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Airline.airlName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Class.claName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.fbFare)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Airline.airlName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Class.claName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.fbID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.fbID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.fbID })
+        </td>
+    </tr>
+}
+
+</table>

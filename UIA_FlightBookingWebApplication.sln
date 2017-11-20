@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2006
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UIA_FlightBookingWebApplication", "UIA_FlightBookingWebApplication\UIA_FlightBookingWebApplication.csproj", "{80A5584E-4310-4946-9D4B-40DFBF1F7AEA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{80A5584E-4310-4946-9D4B-40DFBF1F7AEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80A5584E-4310-4946-9D4B-40DFBF1F7AEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80A5584E-4310-4946-9D4B-40DFBF1F7AEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80A5584E-4310-4946-9D4B-40DFBF1F7AEA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6D08907B-4F3A-4A9C-96CC-A79216EAF530}
+	EndGlobalSection
+EndGlobal

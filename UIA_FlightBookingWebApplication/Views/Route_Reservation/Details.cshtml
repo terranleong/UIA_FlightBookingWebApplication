@@ -1,0 +1,50 @@
+﻿@model UIA_FlightBookingWebApplication.Models.Route_Reservation
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Route_Reservation</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.resID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.resID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.type)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.type)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer1.firstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customer1.firstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Flight.aircID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Flight.aircID)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.recordID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

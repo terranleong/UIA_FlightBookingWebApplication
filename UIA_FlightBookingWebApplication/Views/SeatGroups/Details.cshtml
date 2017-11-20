@@ -1,0 +1,58 @@
+﻿@model UIA_FlightBookingWebApplication.Models.SeatGroup
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>SeatGroup</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.flightSize)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.flightSize)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.totalFC)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.totalFC)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.totalBC)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.totalBC)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.totalPEC)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.totalPEC)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.totalEC)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.totalEC)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.sgID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,45 @@
+﻿@model IEnumerable<UIA_FlightBookingWebApplication.Models.Aircraft>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.fbgID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Airline.airlName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SeatGroup.flightSize)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.fbgID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Airline.airlName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SeatGroup.flightSize)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.aircID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.aircID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.aircID })
+        </td>
+    </tr>
+}
+
+</table>

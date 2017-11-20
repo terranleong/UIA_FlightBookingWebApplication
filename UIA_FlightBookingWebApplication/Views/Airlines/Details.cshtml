@@ -1,0 +1,26 @@
+﻿@model UIA_FlightBookingWebApplication.Models.Airline
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Airline</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.airlName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.airlName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.airlID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,127 @@
+﻿@model IEnumerable<UIA_FlightBookingWebApplication.Models.Flight>
+
+@{
+    ViewBag.Title = "My Booked Flight";
+}
+
+<h2>My Booked Flight</h2>
+
+<p>
+    @Html.ActionLink("Book New Flight", "ViewAvailableFlight")
+</p>
+    
+
+    @if (UIA_FlightBookingWebApplication.Models.Customer.loginCustomer[0] == null)
+    {
+        <h4>Please login to check on the booked flight.</h4>
+    }
+    
+@if (ViewBag.HasBookedFlight == false)
+{
+    <h4>There is no booked flight history.</h4>
+}
+    
+@if (UIA_FlightBookingWebApplication.Models.Customer.loginCustomer[0] != null
+    || ViewBag.HasBookedFlight == true)
+{
+
+    <table class="table">
+
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.source)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.destination)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.fareInfant)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.fareChild)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.fareYouth)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.fareAdult)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.fareSenior)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.dates)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.times)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.durationHour)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.durationMin)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.timeDelayMin)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Aircraft.airlID)
+            </th>
+            <th></th>
+        </tr>
+
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.source)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.destination)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.fareInfant)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.fareChild)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.fareYouth)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.fareAdult)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.fareSenior)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.dates)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.times)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.durationHour)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.durationMin)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.timeDelayMin)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Aircraft.airlID)
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "Details", new {id = item.flightID})
+                </td>
+            </tr>
+        }
+
+
+
+    </table>
+}
+
+
